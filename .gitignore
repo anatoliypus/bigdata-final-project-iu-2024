@@ -1,2 +1,4 @@
 secrets
-data/*.csv
+data/**/*.csv
+output/*.java
+output/*.avsc
