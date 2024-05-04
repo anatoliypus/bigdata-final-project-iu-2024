@@ -1,0 +1,38 @@
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Query 1: Average Temperature by City
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> USE team29_projectdb;
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Drop the existing results table if it exists
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> DROP TABLE IF EXISTS q1_results;
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Create an external table to store the results
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> CREATE EXTERNAL TABLE q1_results (
+. . . . . . . . . . . . . . . . . . . . . . .>     city_id INT,
+. . . . . . . . . . . . . . . . . . . . . . .>     avg_max_temp FLOAT
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED
+. . . . . . . . . . . . . . . . . . . . . . .> FIELDS TERMINATED BY ','
+. . . . . . . . . . . . . . . . . . . . . . .> LOCATION 'project/hive/warehouse/q1';
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Calculate the average maximum temperature by city_id
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> INSERT INTO q1_results
+. . . . . . . . . . . . . . . . . . . . . . .> SELECT 
+. . . . . . . . . . . . . . . . . . . . . . .>     city_id,
+. . . . . . . . . . . . . . . . . . . . . . .>     AVG(max_temp) AS avg_max_temp
+. . . . . . . . . . . . . . . . . . . . . . .> FROM dataset_part_buck
+. . . . . . . . . . . . . . . . . . . . . . .> GROUP BY city_id;
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Display the results
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> SELECT * FROM q1_results;
++----------+---------------+
+| city_id  | avg_max_temp  |
++----------+---------------+
+| 7        | 30.945496     |
+| 5        | 31.836485     |
+| 8        | 30.761076     |
+| 1        | 29.646093     |
+| 2        | 33.630413     |
+| 3        | 32.7887       |
+| 4        | 33.4002       |
+| 6        | 32.681435     |
++----------+---------------+
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 

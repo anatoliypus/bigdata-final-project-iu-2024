@@ -1,0 +1,72 @@
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Query 5: Pressure Distribution
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> USE team29_projectdb;
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Drop the existing results table if it exists
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> DROP TABLE IF EXISTS q5_results;
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Create an external table to store the results
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> CREATE EXTERNAL TABLE q5_results (
+. . . . . . . . . . . . . . . . . . . . . . .>     pressure INT,
+. . . . . . . . . . . . . . . . . . . . . . .>     count_pressure INT
+. . . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED
+. . . . . . . . . . . . . . . . . . . . . . .> FIELDS TERMINATED BY ','
+. . . . . . . . . . . . . . . . . . . . . . .> LOCATION 'project/hive/warehouse/q5';
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Calculate the distribution of pressure values
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> INSERT INTO q5_results
+. . . . . . . . . . . . . . . . . . . . . . .> SELECT 
+. . . . . . . . . . . . . . . . . . . . . . .>     pressure,
+. . . . . . . . . . . . . . . . . . . . . . .>     COUNT(*) AS count_pressure
+. . . . . . . . . . . . . . . . . . . . . . .> FROM dataset_part_buck
+. . . . . . . . . . . . . . . . . . . . . . .> GROUP BY pressure;
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> -- Display the results
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> SELECT * FROM q5_results;
++-----------+-----------------+
+| pressure  | count_pressure  |
++-----------+-----------------+
+| 986       | 2               |
+| 988       | 38              |
+| 991       | 682             |
+| 994       | 3746            |
+| 997       | 10727           |
+| 998       | 13077           |
+| 1003      | 28728           |
+| 1005      | 36167           |
+| 1006      | 39736           |
+| 1007      | 43819           |
+| 1008      | 46534           |
+| 1010      | 49352           |
+| 1016      | 28910           |
+| 1017      | 19036           |
+| 1019      | 7711            |
+| 1026      | 1               |
+| 989       | 98              |
+| 990       | 311             |
+| 992       | 1295            |
+| 993       | 2263            |
+| 999       | 15756           |
+| 1000      | 18369           |
+| 1001      | 21684           |
+| 1014      | 47462           |
+| 1020      | 4568            |
+| 1022      | 1190            |
+| 1024      | 201             |
+| 1025      | 54              |
+| 987       | 12              |
+| 995       | 6179            |
+| 996       | 8518            |
+| 1002      | 24425           |
+| 1004      | 32810           |
+| 1009      | 47818           |
+| 1011      | 50782           |
+| 1012      | 52845           |
+| 1013      | 52121           |
+| 1015      | 38953           |
+| 1018      | 12495           |
+| 1021      | 2484            |
+| 1023      | 497             |
++-----------+-----------------+
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
+0: jdbc:hive2://hadoop-03.uni.innopolis.ru:10> 
