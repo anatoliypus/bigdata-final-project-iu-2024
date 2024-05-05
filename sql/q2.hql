@@ -1,4 +1,4 @@
--- Query 2: Total Snowfall by Date
+-- Query 2: Average Sun Hours by City
 USE team29_projectdb;
 
 -- Drop the existing results table if it exists
@@ -6,20 +6,20 @@ DROP TABLE IF EXISTS q2_results;
 
 -- Create an external table to store the results
 CREATE EXTERNAL TABLE q2_results (
-    date_time STRING,
-    total_snow DECIMAL(10, 5)
+    city_id INT,
+    avg_sun_hours FLOAT          
 )
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY ','
 LOCATION 'project/hive/warehouse/q2';
 
--- Calculate the total snowfall by date
+-- Calculate the average sun hours by city_id
 INSERT INTO q2_results
 SELECT 
-    date_time,
-    SUM(total_snow) AS total_snow
+    city_id,
+    AVG(sun_hour) AS avg_sun_hours   
 FROM dataset_part_buck
-GROUP BY date_time;
+GROUP BY city_id;
 
 -- Display the results
 SELECT * FROM q2_results;
