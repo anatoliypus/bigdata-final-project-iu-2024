@@ -1,1 +1,0 @@
-{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715454868899,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_cb9c2be9f891","paramMap":{"metricName":"rmse","labelCol":"target_heat_index_Scaled","predictionCol":"prediction"},"defaultParamMap":{"metricName":"rmse","labelCol":"label","predictionCol":"prediction","throughOrigin":false}}

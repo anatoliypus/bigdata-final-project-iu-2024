@@ -1,1 +1,0 @@
-{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715454864922,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_e4aa885fd89b","paramMap":{"metricName":"rmse","labelCol":"target_humidity_Scaled","predictionCol":"prediction"},"defaultParamMap":{"throughOrigin":false,"metricName":"rmse","labelCol":"label","predictionCol":"prediction"}}

@@ -1,1 +1,0 @@
-{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715453905753,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_484d998cef89","paramMap":{"metricName":"rmse","labelCol":"target_total_snow","predictionCol":"prediction"},"defaultParamMap":{"throughOrigin":false,"metricName":"rmse","labelCol":"label","predictionCol":"prediction"}}
