@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715538954976,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_4d84d088d343","paramMap":{"labelCol":"target_wind_dir_sin","metricName":"rmse","predictionCol":"prediction"},"defaultParamMap":{"labelCol":"label","metricName":"rmse","predictionCol":"prediction","throughOrigin":false}}

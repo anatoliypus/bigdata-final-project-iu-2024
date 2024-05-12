@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715454860224,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_d73b142cce6a","paramMap":{"labelCol":"target_sun_hour_Scaled","metricName":"rmse","predictionCol":"prediction"},"defaultParamMap":{"labelCol":"label","metricName":"rmse","predictionCol":"prediction","throughOrigin":false}}

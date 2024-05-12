@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715538919299,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_869f2540907c","paramMap":{"labelCol":"target_dew_point_Scaled","metricName":"rmse","predictionCol":"prediction"},"defaultParamMap":{"throughOrigin":false,"labelCol":"label","metricName":"rmse","predictionCol":"prediction"}}

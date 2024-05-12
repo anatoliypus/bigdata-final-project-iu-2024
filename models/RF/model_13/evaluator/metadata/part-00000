@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715454868248,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_8f53b5d29f33","paramMap":{"metricName":"rmse","predictionCol":"prediction","labelCol":"target_feels_like_Scaled"},"defaultParamMap":{"metricName":"rmse","predictionCol":"prediction","labelCol":"label","throughOrigin":false}}

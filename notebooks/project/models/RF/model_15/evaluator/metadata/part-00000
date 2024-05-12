@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715454869542,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_a434a3c83c0a","paramMap":{"predictionCol":"prediction","metricName":"rmse","labelCol":"target_wind_chill_Scaled"},"defaultParamMap":{"predictionCol":"prediction","metricName":"rmse","throughOrigin":false,"labelCol":"label"}}

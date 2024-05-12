@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715540004081,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_dd56dee95d3b","paramMap":{"labelCol":"target_cloudcover_Scaled","predictionCol":"prediction","metricName":"rmse"},"defaultParamMap":{"labelCol":"label","predictionCol":"prediction","throughOrigin":false,"metricName":"rmse"}}

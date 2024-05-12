@@ -1,0 +1,1 @@
+{"class":"org.apache.spark.ml.evaluation.RegressionEvaluator","timestamp":1715538916694,"sparkVersion":"3.2.4","uid":"RegressionEvaluator_a1ded0e44b9a","paramMap":{"metricName":"rmse","predictionCol":"prediction","labelCol":"target_moon_illumunation_Scaled"},"defaultParamMap":{"metricName":"rmse","predictionCol":"prediction","throughOrigin":false,"labelCol":"label"}}

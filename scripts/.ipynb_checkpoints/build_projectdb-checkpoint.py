@@ -1,60 +1,80 @@
 """
-    This module implements methods,
-    which works with PostgreSQL database.
-    It creates schema of tables 'city' and
-    'database', imports data there and tests
-    the database by selecting first rows.
+This module implements methods that interact with a PostgreSQL database.
+It creates the schema of tables 'city' and 'dataset', imports data into them,
+and tests the database by selecting initial rows.
 """
 
 import os
+import psycopg2
+
+# We should import specific functions directly
 from pprint import pprint
-import psycopg2 as psql
 
+# Constants should be named in all uppercase
+PASSWORD_FILE_PATH = os.path.join("secrets", ".psql.pass")
 
-# Read password from secrets file
-file = os.path.join("secrets", ".psql.pass")
+def read_password(file_path):
+    """
+    Read and return the password from a file.
 
-with open(file, "r", encoding='utf-8') as file:
-    password = file.read().rstrip()
+    Args:
+        file_path (str): The file path to read the password from.
 
-# build connection string
-CONN_STRING = f"host=hadoop-04.uni.innopolis.ru port=5432 user=team29 \
-                dbname=team29_projectdb password={password}"
+    Returns:
+        str: The password.
+    """
+    with open(file_path, "r", encoding='utf-8') as file:
+        return file.read().strip()
 
+def create_connection(password):
+    """
+    Create and return a new database connection using the provided password.
 
-# Connect to the remote dbms
-with psql.connect(CONN_STRING) as conn:
+    Args:
+        password (str): The database password.
 
-    # Create a cursor for executing psql commands
-    cur = conn.cursor()
-    # Read the commands from the file and execute them.
+    Returns:
+        connection: A new database connection.
+    """
+    conn_string = f"host=hadoop-04.uni.innopolis.ru port=5432 user=team29 \
+                    dbname=team29_projectdb password={password}"
+    return psycopg2.connect(conn_string)
 
-    print('Creating tables...')
-    with open(os.path.join("sql", "create_tables.sql"), encoding='utf-8') as file:
+def execute_sql_from_file(cursor, file_path):
+    """
+    Execute SQL commands from a file.
+
+    Args:
+        cursor (cursor): The database cursor.
+        file_path (str): The path to the SQL file.
+    """
+    with open(file_path, encoding='utf-8') as file:
         content = file.read()
-        cur.execute(content)
-    conn.commit()
+        cursor.execute(content)
 
-    # Read the commands from the file and execute them.
-    print('Importing data...')
-    with open(os.path.join("sql", "import_data.sql"), encoding='utf-8') as file:
-        # We assume that the COPY commands in the file are ordered (1.city, 2.dataset)
-        commands = file.readlines()
-        with open(os.path.join("data", "city.csv"), "r", encoding='utf-8') as depts:
-            cur.copy_expert(commands[0], depts)
-        with open(os.path.join("data", "dataset.csv"), "r", encoding='utf-8') as emps:
-            cur.copy_expert(commands[1], emps)
+def main():
+    """
+    Main function to create tables, import data, and test the database.
+    """
+    password = read_password(PASSWORD_FILE_PATH)
+    with create_connection(password) as conn:
+        cursor = conn.cursor()
 
-        # If the sql statements are CRUD then you need to commit the change
+        # Create tables
+        print('Creating tables...')
+        execute_sql_from_file(cursor, os.path.join("sql", "create_tables.sql"))
         conn.commit()
 
-        pprint(conn)
-        cur = conn.cursor()
-        # Read the sql commands from the file
+        # Import data
+        print('Importing data...')
+        execute_sql_from_file(cursor, os.path.join("sql", "import_data.sql"))
+        conn.commit()
+
+        # Test the database
         print('Testing database...')
-        with open(os.path.join("sql", "test_database.sql"), encoding='utf-8') as file:
-            commands = file.readlines()
-            for command in commands:
-                cur.execute(command)
-                # Read all records and print them
-                pprint(cur.fetchall())
+        execute_sql_from_file(cursor, os.path.join("sql", "test_database.sql"))
+        # Fetch and print all records
+        pprint(cursor.fetchall())
+
+if __name__ == "__main__":
+    main()
