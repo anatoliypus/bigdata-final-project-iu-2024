@@ -67,7 +67,19 @@ def main():
 
         # Import data
         print('Importing data...')
-        execute_sql_from_file(cursor, os.path.join("sql", "import_data.sql"))
+        # execute_sql_from_file(cursor, os.path.join("sql", "import_data.sql"))
+        with open('./data/city.csv') as city:
+            copy_sql = """
+                        COPY city FROM stdin WITH CSV HEADER
+                        DELIMITER ',' NULL AS 'NULL';
+                        """
+            cursor.copy_expert(sql=copy_sql, file=city)
+        with open('./data/dataset.csv') as dataset:
+            copy_sql = """
+                        COPY dataset FROM stdin WITH CSV HEADER
+                        DELIMITER ',' NULL AS 'NULL';
+                        """
+            cursor.copy_expert(sql=copy_sql, file=dataset)
         conn.commit()
 
         # Test the database
